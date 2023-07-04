@@ -94,18 +94,16 @@ class LeadController extends Controller
      */
     public function update(UpdateLeadsRequest $request, Lead $lead)
     {
-        dd($lead);
+        dd($request);
         $validatedData = $request->validate([
             'name' => ['required', 'string'],
             'fullAddress' => ['required', 'string'],
             'postcode' => ['required', 'string'],
             'email' => ['required', 'email'],
             'Phone' => ['required', 'string'],
-            'landline' => ['nullable', 'string'],
             'dob' => ['required', 'date'],
             'gasSupply' => ['required', 'string'],
             'employedBenefits' => ['required', 'string'],
-            'earnings' => ['nullable', 'string'],
             'benefit' => ['required', 'string'],
             'energyRating' => ['required', 'string'],
             'updatesSinceEpc' => ['nullable', 'string'],
@@ -120,7 +118,9 @@ class LeadController extends Controller
             'medicalCondtions' => ['nullable', 'string'],
             'notes' => ['nullable', 'string'],
         ]);
-       Lead::whereId($lead->id)->update($validatedData);
+        Lead::update(array_merge($validatedData, [
+            'companyID' => auth()->user()->companyID,
+        ]));
 
         return redirect()->route('lead.index')
                         ->with('success','Lead updated successfully');

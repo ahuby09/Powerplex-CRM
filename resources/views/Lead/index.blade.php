@@ -49,7 +49,6 @@
                             <form style="" action="{{ route('lead.store') }}" method="POST">
                                 {{ csrf_field() }}
                                 <!-- Text input -->
-                                {{method_field('PATCH')}}
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="name">Full Name</label>
                                     <input type="text" id="name" name="name" class="form-control" />

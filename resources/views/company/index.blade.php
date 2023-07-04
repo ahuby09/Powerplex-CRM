@@ -31,7 +31,7 @@
             <div class="modal-body">
                     <div class="container">
                         <form class="form-horizontal" method="POST" action="{{ route('company.store') }}">
-                            {{ csrf_field() }}
+                            @csrf
                           <div class="form-group">
                             <label class="control-label col-sm-2" for="name">Name</label>
                             <div class="col-sm-10">

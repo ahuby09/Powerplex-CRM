@@ -10,8 +10,9 @@
                             <tbody>
                                 <tr>
                                     <td colspan="1" class="text-light bg-dark">
-                                        <form action="{{ route('lead.update', $lead->id)}}" method="POST">
+                                        <form action="{{ route('lead.update', $lead)}}" method="POST">
                                             @csrf
+                                            {{method_field('PATCH')}}
                                             <fieldset>
                                                 <div class="form-group">
                                                     <label class="col-md-4 control-label">Date Of Birth</label>
@@ -143,6 +144,7 @@
                                                     </div>
                                                 </div>
                                             </fieldset>
+                                            <input type="submit" />
                                         </form>
                                     </td>
                                     <td colspan="1" class="text-light bg-dark">
@@ -279,13 +281,6 @@
                                                                 value="{{ $lead->secondaryHeating }}"
                                                                 placeholder="secondaryHeating" class="form-control"
                                                                 required="true" value="" type="text"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="col-md-4 control-label">Submit Edit</label>
-                                                    <div class="col-md-8 inputGroupContainer">
-                                                        <input type="submit" />
-
                                                     </div>
                                                 </div>
                                             </fieldset>

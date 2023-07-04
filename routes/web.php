@@ -20,5 +20,5 @@ Route::get('/', function () {
 });
 
 Route::middleware("auth")->resource('lead', LeadController::class);
-Route::middleware("auth")->resource('company', companyController::class);
+Route::middleware("auth")->resource('company', CompanyController::class);
 
