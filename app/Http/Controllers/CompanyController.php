@@ -17,10 +17,10 @@ class companyController extends Controller
     public function index():View
     {
 
-        $company = Company::latest()->paginate(5);
+    $company = Company::latest()->paginate(5);
 
-        return view('company.index',compact('company'))
-                    ->with('i', (request()->input('page', 1) - 1) * 5);
+    return view('company.index', compact('company'))
+        ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -44,7 +44,7 @@ class companyController extends Controller
             'email' => ['required', 'string'],
 
         ]);
-        Company::update($validatedData);
+        Company::create($validatedData);
 
         return redirect()->route('company.index')
                         ->with('success','Company created successfully.');

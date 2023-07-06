@@ -44,6 +44,5 @@ require('./vendor/livewire-ui/modal');
 
 // Reference from vendor
 
-$(document).ready(function() {
-    $("#addContent").modal("show");
-});
+
+

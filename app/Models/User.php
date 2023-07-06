@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'companyID'
     ];
 
     /**
@@ -47,6 +48,6 @@ class User extends Authenticatable
         return $this->hasMany(Lead::class, 'userID', 'id');
     }
     public function company(){
-        return $this->hasOne(Company::class, 'companyID', 'id');
+        return $this->hasOne(Company::class, 'id', 'companyID');
     }
 }

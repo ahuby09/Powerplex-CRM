@@ -11,7 +11,7 @@
     <div class="row" style="margin-top: 20px;">
         @foreach (\App\Models\Lead::all() as $lead)
             <div class="col-sm-3" style="padding-top: 20px;">
-                <div class="card">
+                <div class="card" @if($lead->leadApproval) style="background-color: green;" @endif>
                     <div class="card-body">
                         <h5 class="card-title">{{ $lead->name }}</h5>
                         <p class="card-text">Lead Postcode: {{ $lead->postcode }}</p>
@@ -21,7 +21,7 @@
                             <a href="{{ route('lead.show', $lead->id) }}" class="btn-md"><i class="fa-solid fa-eye"></i></a>
                             <a href="{{ route('lead.edit', $lead->id) }}" class="btn-md"><i class="fas fa-edit"></i></a>
 
-                            <form id="my_form" action="{{ route('lead.destroy', $lead->id) }}" method="POST">
+                            <form id="my_form" action="{{ route('lead.destroy', $lead->id) }}" method="POST" onclick="return confirmDelete(event)">
                                 @csrf
                                 @method('DELETE')
                                 <a href="javascript:{}" onclick="document.getElementById('my_form').submit();"><i
@@ -509,4 +509,14 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            function confirmDelete(event) {
+                if (!confirm('Are you sure you want to delete this record?')) {
+                    event.preventDefault();
+                    return false;
+                }
+                return true;
+            }
+        </script>
     @endsection

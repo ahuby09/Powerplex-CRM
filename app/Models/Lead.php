@@ -23,5 +23,8 @@ class Lead extends Model
     public function user(){
         return $this->belongsTo(User::class, 'userID', 'id');
     }
+    public function company(){
+        return $this->hasOne(Company::class, 'id', 'companyID');
+    }
 
 }

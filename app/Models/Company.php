@@ -12,6 +12,8 @@ class Company extends Model
     protected $guarded = [
         "updated_at",
         "created_at",
+        "companyID",
+        "name",
     ];
 
 

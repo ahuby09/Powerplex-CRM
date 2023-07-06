@@ -3,6 +3,9 @@
 use App\Http\Controllers\companyController;
 use App\Http\Controllers\LeadController;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+use App\Http\Controllers\UserController;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +18,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('');
-});
+
+Route::middleware("auth")->get('/', [LeadController::class, 'leadDash']);
 
 Route::middleware("auth")->resource('lead', LeadController::class);
-Route::middleware("auth")->resource('company', CompanyController::class);
 
+Route::middleware("auth")->resource('company', CompanyController::class);
+Route::middleware("auth")->resource('user', UserController::class);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/users', function () {
+        return view('user.index');
+    })->name('user.index');
+
+    Route::prefix('user')->group(function () {
+        Route::post('/create-user', [UserController::class, 'createUser'])->name('user.create');
+    });
+});
+
+Route::get('/users', function () {
+    $users = User::all();
+    return view('user.index', ['users' => $users]);
+})->name('user.index');;

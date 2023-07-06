@@ -40,7 +40,7 @@ return new class extends Migration
             $table->string('notes')->nullable();
             $table->integer('userID');
             $table->integer('companyID')->nullable();
-            $table->string('approved')->nullable();
+            $table->string('leadApproval')->nullable();
 
 
         });
