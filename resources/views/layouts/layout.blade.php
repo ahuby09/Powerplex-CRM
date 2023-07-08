@@ -6,7 +6,36 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>PowerPlex CRM</title>
+    <style type="text/css">
+
+.scroll {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+</style>
 </head>
 <body>
     @livewire('livewire-ui-modal')
@@ -28,14 +57,20 @@
                             <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span> </a>
                         </li>
+                        @if (!Auth::user()->companyID)
                         <li>
                             <a href="/lead" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Leads</span></a>
 
                         </li>
                         <li>
-                            <a href="/Users" class="nav-link px-0 align-middle">
+                            <a href="/users" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">User</span></a>
+
+                        </li>
+                        <li>
+                            <a href="/employee" class="nav-link px-0 align-middle">
+                                <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Employee</span></a>
 
                         </li>
                         <li>
@@ -48,6 +83,7 @@
                                 <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">SolarPV</span> </a>
                         </li>
                     </ul>
+                    @endif
                     <hr>
                     <div class="dropdown pb-4">
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">

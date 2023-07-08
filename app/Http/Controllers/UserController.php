@@ -4,6 +4,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+
+use App\Models\Company;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +13,11 @@ use App\Http\Requests\UpdateUserRequest;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        $companies = Company::with('users')->get();
+        return view('user.index', ['companies' => $companies]);
+    }
     // Method to show the form for creating a new user
     public function showCreateUserForm()
     {
@@ -20,6 +27,11 @@ class UserController extends Controller
     public function edit(User $user)
     {
          return view('user.edit',compact('user'));
+    }
+    public function listEmployees()
+    {
+        $employees = User::with('leads')->where('companyID', 1)->get();
+        return view('employee.index', compact('employees'));
     }
     public function update(UpdateUserRequest $request, $id)
     {
@@ -61,4 +73,10 @@ class UserController extends Controller
         // Redirect or return a response
         return redirect()->back()->with('success', 'User created successfully.');
     }
+    public function showLeads(User $employee)
+{
+    $leads = $employee->leads()->get();
+    return view('employee.showleads', compact('employee', 'leads'));
+}
+
 }

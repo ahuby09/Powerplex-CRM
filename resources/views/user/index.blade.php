@@ -16,16 +16,18 @@
         <div class="container">
             <h2>User List</h2>
             <div class="row">
-                @foreach($users as $user)
+                @foreach($companies as $company)
                     <div class="col-sm-4 mb-4">
-                        <div class="card">
+                        <div class="card scrollable-card">
                             <div class="card-body">
-                                <h5 class="card-title">{{ $user->name }}</h5>
-                                <p class="card-text">Email: {{ $user->email }}</p>
-                                @if ($user->company)
-                                    <p class="card-text">Company: {{ $user->company->name }}</p>
-                                 @endif
-                                 <a href="{{ route('user.edit', $user->id) }}" class="btn-md"><i class="fas fa-edit"></i></a>
+                                <h5 class="card-title">{{ $company->name }}</h5>
+                                @foreach($company->users as $user)
+                                <div class="card mb-4">
+                                    <div class="card-body"">
+                                    <p class="card-text ">{{ $user->name }} </p>
+                                    </div>
+                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

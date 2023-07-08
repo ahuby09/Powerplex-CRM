@@ -1,5 +1,6 @@
 @extends('layouts/layout')
 @section('content')
+    @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
@@ -8,31 +9,87 @@
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct">Add New</button>
         </div>
     </div>
+@if (!Auth::user()->companyID)
+    @php
+        $approvedLeads = \App\Models\Lead::where('leadApproval', '1')->orderBy('created_at', 'desc')->paginate(9);
+        $newLeads = \App\Models\Lead::where('leadApproval', '!=', '1')->whereDate('created_at', '=', now()->subDay())->orderBy('created_at', 'desc')->paginate(9);
+        $oldLeads = \App\Models\Lead::where('leadApproval', '!=', '1')->whereDate('created_at', '<', now()->subDay())->orderBy('created_at', 'desc')->paginate(9);
+    @endphp
+
     <div class="row" style="margin-top: 20px;">
-        @foreach (\App\Models\Lead::all() as $lead)
-            <div class="col-sm-3" style="padding-top: 20px;">
-                <div class="card" @if($lead->leadApproval) style="background-color: green;" @endif>
+        <div class="col-md-4 scroll" id="approved-leads">
+            <h3 class="text-light">Approved Leads</h3>
+            @foreach ($approvedLeads as $lead)
+                <div class="card bg-dark text-white">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $lead->name }}</h5>
+                        <h5 class="card-title text-light">{{ $lead->name }}</h5>
                         <p class="card-text">Lead Postcode: {{ $lead->postcode }}</p>
                         <p class="card-text">Lead Number: {{ $lead->Phone }}</p>
                         <p class="card-text">Lead Email: {{ $lead->email }}</p>
-                        <div style="display:flex;justify-content: space-between;">
-                            <a href="{{ route('lead.show', $lead->id) }}" class="btn-md"><i class="fa-solid fa-eye"></i></a>
-                            <a href="{{ route('lead.edit', $lead->id) }}" class="btn-md"><i class="fas fa-edit"></i></a>
+                        <div class="btn-group" role="group" aria-label="Lead Actions">
+                            <a href="{{ route('lead.show', $lead->id) }}" class="btn btn-primary btn-lg"><i class="fa-solid fa-eye"></i></a>
+                            <a href="{{ route('lead.edit', $lead->id) }}" class="btn btn-primary btn-lg"><i class="fas fa-edit"></i></a>
 
                             <form id="my_form" action="{{ route('lead.destroy', $lead->id) }}" method="POST" onclick="return confirmDelete(event)">
                                 @csrf
                                 @method('DELETE')
-                                <a href="javascript:{}" onclick="document.getElementById('my_form').submit();"><i
-                                        class="fa fa-trash" aria-hidden="true"></i></a>
+                                <button type="submit" class="btn btn-danger btn-lg rounded-0"><i class="fa fa-trash" aria-hidden="true"></i></button>
                             </form>
-                            </td>
                         </div>
                     </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+        </div>
+        <div class="col-md-4 scroll" id="new-leads">
+            <h3 class="text-light">New Leads (1 day old)</h3>
+            @foreach ($newLeads as $lead)
+                <div class="card bg-dark text-white">
+                    <div class="card-body">
+                        <h5 class="card-title text-light">{{ $lead->name }}</h5>
+                        <p class="card-text">Lead Postcode: {{ $lead->postcode }}</p>
+                        <p class="card-text">Lead Number: {{ $lead->Phone }}</p>
+                        <p class="card-text">Lead Email: {{ $lead->email }}</p>
+                        <div class="btn-group" role="group" aria-label="Lead Actions">
+                            <a href="{{ route('lead.show', $lead->id) }}" class="btn btn-primary btn-lg"><i class="fa-solid fa-eye"></i></a>
+                            <a href="{{ route('lead.edit', $lead->id) }}" class="btn btn-primary btn-lg"><i class="fas fa-edit"></i></a>
+
+                            <form id="my_form" action="{{ route('lead.destroy', $lead->id) }}" method="POST" onclick="return confirmDelete(event)">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-lg rounded-0"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="col-md-4 scroll" id="old-leads">
+            <h3 class="text-light">Old Leads (Over a day)</h3>
+            @foreach ($oldLeads as $lead)
+                <div class="card bg-dark text-white">
+                    <div class="card-body">
+                        <h5 class="card-title text-light">{{ $lead->name }}</h5>
+                        <p class="card-text">Lead Postcode: {{ $lead->postcode }}</p>
+                        <p class="card-text">Lead Number: {{ $lead->Phone }}</p>
+                        <p class="card-text">Lead Email: {{ $lead->email }}</p>
+                        <div class="btn-group" role="group" aria-label="Lead Actions">
+                            <a href="{{ route('lead.show', $lead->id) }}" class="btn btn-primary btn-lg"><i class="fa-solid fa-eye"></i></a>
+                            <a href="{{ route('lead.edit', $lead->id) }}" class="btn btn-primary btn-lg"><i class="fas fa-edit"></i></a>
+
+                            <form id="my_form" action="{{ route('lead.destroy', $lead->id) }}" method="POST" onclick="return confirmDelete(event)">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-lg rounded-0"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+@endif
+
         <!-- modal for adding data !-->
         <div class="modal fade" id="addProduct" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
             <div class="modal-dialog">

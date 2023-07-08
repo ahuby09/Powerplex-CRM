@@ -47,7 +47,8 @@ class User extends Authenticatable
     public function leads(){
         return $this->hasMany(Lead::class, 'userID', 'id');
     }
-    public function company(){
-        return $this->hasOne(Company::class, 'id', 'companyID');
+    public function company()
+    {
+    return $this->belongsTo(Company::class, 'companyID', 'id');
     }
 }

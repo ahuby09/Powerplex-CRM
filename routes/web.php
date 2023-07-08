@@ -1,42 +1,30 @@
 <?php
 
-use App\Http\Controllers\companyController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\LeadController;
 use Illuminate\Support\Facades\Route;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 use App\Http\Controllers\UserController;
-use App\Models\User;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-
+// Dashboard route
 Route::middleware("auth")->get('/', [LeadController::class, 'leadDash']);
 
+// Lead resource routes
 Route::middleware("auth")->resource('lead', LeadController::class);
-
+Route::get('/dashboard', [LeadController::class, 'dashboard'])->name('lead.dashboard');
+// Company resource routes
 Route::middleware("auth")->resource('company', CompanyController::class);
+
+// User resource routes
 Route::middleware("auth")->resource('user', UserController::class);
 
+// User creation route
 Route::middleware(['auth'])->group(function () {
-    Route::get('/users', function () {
-        return view('user.index');
-    })->name('user.index');
-
     Route::prefix('user')->group(function () {
         Route::post('/create-user', [UserController::class, 'createUser'])->name('user.create');
+        Route::post('/users', [UserController::class, 'index'])->name('user.index');
     });
 });
 
-Route::get('/users', function () {
-    $users = User::all();
-    return view('user.index', ['users' => $users]);
-})->name('user.index');;
+// Employee routes
+Route::middleware("auth")->get('employee', [UserController::class, 'listEmployees'])->name('employees.list');
+Route::middleware("auth")->get('employees/{employee}/leads', [UserController::class, 'showLeads'])->name('employees.leads');
