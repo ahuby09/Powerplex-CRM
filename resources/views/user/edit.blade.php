@@ -3,7 +3,7 @@
 @section('content')
     <div class="row" style="margin-top: 20px;">
         <div class="col-sm-12" style="padding-top: 20px;">
-            <div class="card">
+            <div class="card" >
                 <div class="card-body">
                     <h5 class="card-title">{{ $user->name }}</h5>
                     <form action="{{ route('user.update', $user->id) }}" method="POST">

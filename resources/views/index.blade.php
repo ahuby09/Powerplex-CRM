@@ -5,7 +5,6 @@
             <div class="pull-left">
                 <h2>PowerPlex CRM</h2>
             </div>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct">Add New</button>
         </div>
     </div>
     <div class="row" style="margin-top: 20px;">

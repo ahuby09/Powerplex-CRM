@@ -21,14 +21,14 @@ class DatabaseSeeder extends Seeder
 
     $this->call(UserSeeder::class);
 
-    // Create 5 dummy companies using the CompanyFactory
-    Company::factory()->count(5)->create();
+    // // Create 5 dummy companies using the CompanyFactory
+    // Company::factory()->count(5)->create();
 
-    // Create 10 dummy leads using the LeadFactory
-      Lead::factory()->count(50)->create();
+    // // Create 10 dummy leads using the LeadFactory
+    //   Lead::factory()->count(50)->create();
 
-    // Create 10 dummy leads using the LeadFactory
-    User::factory()->count(5)->create();
+    // // Create 10 dummy leads using the LeadFactory
+    // User::factory()->count(5)->create();
 
 
 

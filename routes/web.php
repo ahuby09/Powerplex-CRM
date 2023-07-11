@@ -24,7 +24,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/users', [UserController::class, 'index'])->name('user.index');
     });
 });
-
+route::get('/sign-out', [UserController::class, 'signOut'])->name('sign-out');
 // Employee routes
 Route::middleware("auth")->get('employee', [UserController::class, 'listEmployees'])->name('employees.list');
 Route::middleware("auth")->get('employees/{employee}/leads', [UserController::class, 'showLeads'])->name('employees.leads');

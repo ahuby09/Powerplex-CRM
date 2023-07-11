@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Lead;
 use App\Models\User;
 use App\Models\Company;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -16,6 +17,8 @@ class LeadFactory extends Factory
     {
         $userIds = User::pluck('id')->toArray();
         $companyIds = Company::pluck('id')->toArray();
+        $lastWeekStartDate = Carbon::now()->subWeek()->startOfDay();
+        $lastWeekEndDate = Carbon::now()->subWeek()->endOfDay();
 
         return [
             'name' => $this->faker->name,
@@ -24,6 +27,8 @@ class LeadFactory extends Factory
             'email' => $this->faker->unique()->safeEmail,
             'Phone' => $this->faker->phoneNumber,
             'landline' => $this->faker->phoneNumber,
+
+            'created_at' => $this->faker->dateTimeBetween($lastWeekStartDate, $lastWeekEndDate),
             'dob' => $this->faker->date,
             'gasSupply' => $this->faker->randomElement(['Yes', 'No']),
             'employedBenefits' => $this->faker->randomElement(['Employed', 'Benefits', 'Both', 'None']),
@@ -40,8 +45,8 @@ class LeadFactory extends Factory
             'currentHeating' => $this->faker->randomElement(['Gas', 'Oil', 'Electric', 'LPG', 'Solid Fuel', 'Renewable']),
             'secondaryHeating' => $this->faker->randomElement(['Gas', 'Oil', 'Electric', 'LPG', 'Solid Fuel', 'Renewable', 'None']),
             'userID' => $this->faker->randomElement($userIds),
+            'leadApproval' => $this->faker->randomElement(['1', '2']),
             'companyID' => $this->faker->randomElement($companyIds),
-            'leadApproval' => $this->faker->randomElement(['Approved', '']),
         ];
     }
 }

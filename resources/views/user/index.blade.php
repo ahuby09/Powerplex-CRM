@@ -13,26 +13,40 @@
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUser">Add New User</button>
             </div>
         </div>
-        <div class="container">
-            <h2>User List</h2>
-            <div class="row">
-                @foreach($companies as $company)
-                    <div class="col-sm-4 mb-4">
-                        <div class="card scrollable-card">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $company->name }}</h5>
-                                @foreach($company->users as $user)
-                                <div class="card mb-4">
-                                    <div class="card-body"">
-                                    <p class="card-text ">{{ $user->name }} </p>
+    </div>
+
+    <div class="container-fluid">
+        <h2>User List</h2>
+        <div class="row">
+            @foreach($companies as $company)
+                <div class="col-sm-4 mb-4">
+                    <div class="card bg-dark text-white">
+                        <div class="card-header">{{ $company->name }}</div>
+                        <div class="card-body overflow-auto" style="max-height: 500px;">
+                            @foreach($company->users as $user)
+                                <div class="card text-white mb-3" style="background: #404040;">
+                                    <div class="card-body">
+                                        <h6 class="card-text">{{ $user->email }}</h6>
+                                        <p class="card-text">{{ $user->name }}</p>
+                                        <div class="d-flex justify-content-between">
+                                            <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary">
+                                                Edit
+                                            </a>
+                                            <form action="{{ route('user.destroy', $user->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                                @endforeach
-                            </div>
+                            @endforeach
                         </div>
                     </div>
-                @endforeach
-            </div>
+                </div>
+            @endforeach
         </div>
     </div>
 

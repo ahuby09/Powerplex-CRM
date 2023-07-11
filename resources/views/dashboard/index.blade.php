@@ -37,9 +37,9 @@
                                 <div class="card-body">
                                     <h5 class="card-title">Leads Assigned to Companies</h5>
                                     <ul class="list-group">
-                                        @foreach ($leadsByCompany as $company => $leadCount)
-                                            <li class="list-group-item bg-dark text-white">{{ $company }}: {{ $leadCount }}</li>
-                                        @endforeach
+                                        @foreach ($leadsByCompany as $companyId => $leadCount)
+                                        <p>Company: {{ $companyNames[$companyId] ?? 'Unknown' }} | Lead Count: {{ $leadCount }}</p>
+                                    @endforeach
                                     </ul>
                                 </div>
                             </div>

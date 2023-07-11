@@ -53,9 +53,12 @@ class companyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $company = Company::findOrFail($id);
+        $leads = Lead::where('company_id', $company->id)->get();
+
+        return view('companies.show', compact('company', 'leads'));
     }
 
     /**
@@ -63,7 +66,9 @@ class companyController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $company = Company::findOrFail($id);
+        // Add any additional logic or data retrieval you need for the edit view
+        return view('companies.edit', compact('company'));
     }
 
     /**
@@ -80,5 +85,11 @@ class companyController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function leads($id)
+    {
+        $company = Company::with('leads')->findOrFail($id);
+        // Add any additional logic or data retrieval you need for the leads view
+        return view('companies.leads', compact('company'));
     }
 }

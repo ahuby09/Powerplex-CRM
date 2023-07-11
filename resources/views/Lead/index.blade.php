@@ -11,9 +11,15 @@
     </div>
 @if (!Auth::user()->companyID)
     @php
-        $approvedLeads = \App\Models\Lead::where('leadApproval', '1')->orderBy('created_at', 'desc')->paginate(9);
-        $newLeads = \App\Models\Lead::where('leadApproval', '!=', '1')->whereDate('created_at', '=', now()->subDay())->orderBy('created_at', 'desc')->paginate(9);
-        $oldLeads = \App\Models\Lead::where('leadApproval', '!=', '1')->whereDate('created_at', '<', now()->subDay())->orderBy('created_at', 'desc')->paginate(9);
+        $approvedLeads = \App\Models\Lead::where('leadApproval', '1')
+        ->where('companyID', NULL)
+        ->orderBy('created_at', 'desc')->paginate(50);
+        $newLeads = \App\Models\Lead::where('created_at', '>', now()->subDay())
+        ->where('leadApproval', NULL)
+        ->orderBy('created_at', 'desc')
+        ->paginate(50);
+
+        $oldLeads = \App\Models\Lead::where('leadApproval', '!=', '1')->whereDate('created_at', '<', now()->subDay())->orderBy('created_at', 'desc')->paginate(50);
     @endphp
 
     <div class="row" style="margin-top: 20px;">
@@ -229,7 +235,7 @@
                                         aria-label="Default select example">
                                         <option value="Owner">Owner</option>
                                         <option value="Private Tenant">Private Tenant</option>
-                                        <option value="Social Housing">Social Housing</option>
+                                        <option value="Council Housing">Council Housing</option>
                                     </select>
                                 </div>
                                 <!-- Property Type !-->

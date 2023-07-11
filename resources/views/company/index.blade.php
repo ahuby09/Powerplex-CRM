@@ -5,13 +5,16 @@
     <div class="row" style="margin-top: 20px;">
         @foreach (\App\Models\Company::all() as $company)
             <div class="col-sm-3" style="padding-top: 20px;">
-                <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">{{$company->name}}</h5>
-                    <p class="card-text">Company Address: {{$company->address}}</p>
-                    <p class="card-text">Company Number: {{$company->number}}</p>
-                    <p class="card-text">Company Email: {{$company->email}}</p>
-                </div>
+                <div class="card bg-dark text-light">
+                    <div class="card-body">
+                        <h5 class="card-title">{{$company->name}}</h5>
+                        <p class="card-text">Company Address: {{$company->address}}</p>
+                        <p class="card-text">Company Number: {{$company->number}}</p>
+                        <p class="card-text">Company Email: {{$company->email}}</p>
+                        {{-- <a href="{{ route('company.edit', $company->id) }}" class="btn btn-primary">Edit</a> --}}
+                        {{-- <a href="{{ route('company.show', $company->id) }}" class="btn btn-secondary">View</a>
+                        <a href="{{ route('company.leads', $company->id) }}" class="btn btn-info">View Leads</a> --}}
+                    </div>
                 </div>
             </div>
         @endforeach

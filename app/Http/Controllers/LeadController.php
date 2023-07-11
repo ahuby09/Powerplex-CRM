@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Lead;
 use App\Http\Requests\StoreLeadsRequest;
 use App\Http\Requests\UpdateLeadsRequest;
+use App\Models\Company;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+
+use GoogleSheetExporter as GlobalGoogleSheetExporter;
+use App\Services\GoogleSheetsService;
 
 class LeadController extends Controller
 {
@@ -40,13 +44,16 @@ class LeadController extends Controller
         $newLeads = Lead::whereBetween('created_at', [$startOfDay, $endOfDay])->count();
 
         // Calculate approved and rejected leads
-        $approvedLeads = Lead::where('leadApproval', 'approved')->count();
-        $rejectedLeads = Lead::where('leadApproval', 'rejected')->count();
+        $approvedLeads = Lead::where('leadApproval', '1')->count();
+        $rejectedLeads = Lead::where('leadApproval', '2')->count();
 
         // Calculate lead count by company
         $leadsByCompany = Lead::select('companyID', \DB::raw('count(*) as lead_count'))
             ->groupBy('companyID')
             ->pluck('lead_count', 'companyID');
+
+        // Fetch company names based on company IDs
+        $companyNames = Company::whereIn('id', $leadsByCompany->keys()->toArray())->pluck('name', 'id');
 
         // Generate lead amount by date chart data
         $leadChartData = Lead::select(\DB::raw('DATE(created_at) as date'), \DB::raw('count(*) as lead_count'))
@@ -72,6 +79,7 @@ class LeadController extends Controller
      */
     public function store(StoreLeadsRequest $request): RedirectResponse
     {
+
         // Validate the form data
         $validatedData = $request->validated();
 
@@ -105,12 +113,13 @@ class LeadController extends Controller
      */
     public function update(UpdateLeadsRequest $request, $id)
     {
+
         // Validate the form data
         $validatedData = $request->validated();
 
+
         // Update the lead with the validated data
         Lead::whereId($id)->update($validatedData);
-
         return redirect()->route('lead.index')
             ->with('success', 'Lead updated successfully');
     }

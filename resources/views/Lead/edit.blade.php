@@ -293,7 +293,7 @@
                                                         </div>
                                                         <div class="checkbox">
                                                             <label>
-                                                                <input id="leadDisapproval" name="leadApproval" value="0" type="checkbox" {{ !$lead->leadApproval ? 'checked' : '' }}> No
+                                                                <input id="leadDisapproval" name="leadApproval" value="2" type="checkbox" {{ !$lead->leadApproval ? 'checked' : '' }}> No
                                                             </label>
                                                         </div>
                                                     </div>

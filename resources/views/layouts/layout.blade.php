@@ -53,18 +53,19 @@
                                 <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span> </a>
-                        </li>
                         @if (!Auth::user()->companyID)
+                        <li class="nav-item">
+                            <a href="/dashboard" class="nav-link align-middle px-0">
+                                <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+                            </a>
+                        </li>
                         <li>
                             <a href="/lead" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Leads</span></a>
 
                         </li>
                         <li>
-                            <a href="/users" class="nav-link px-0 align-middle">
+                            <a href="/user" class="nav-link px-0 align-middle">
                                 <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">User</span></a>
 
                         </li>
@@ -96,13 +97,13 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">Sign out</a></li>
+                            <li><a class="dropdown-item" href="/sign-out">Sign out</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="col py-3 bg-dark" >
-                @yield('content');
+                @yield('content')
             </div>
         </div>
     </div>

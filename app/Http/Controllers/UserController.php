@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -32,6 +33,11 @@ class UserController extends Controller
     {
         $employees = User::with('leads')->where('companyID', 1)->get();
         return view('employee.index', compact('employees'));
+    }
+    public function signOut()
+    {
+    Auth::logout();
+    return redirect()->route('login'); // Replace 'login' with your desired redirect route
     }
     public function update(UpdateUserRequest $request, $id)
     {
@@ -74,9 +80,9 @@ class UserController extends Controller
         return redirect()->back()->with('success', 'User created successfully.');
     }
     public function showLeads(User $employee)
-{
-    $leads = $employee->leads()->get();
-    return view('employee.showleads', compact('employee', 'leads'));
-}
+    {
+        $leads = $employee->leads()->get();
+        return view('employee.showleads', compact('employee', 'leads'));
+    }
 
 }
